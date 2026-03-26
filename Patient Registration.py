@@ -87,8 +87,9 @@ class DiagnosisLogger(Patientregestration) :
             
             for data in alldata:
                 if data['Patient Id'] == ask_for_id:
-                    data['Dignose'] = list(data['Dignose']).append(self.dignose)
-                    data['Sevirety'] = list(data['Sevirety']).append(self.sevirety)
+                    data['Dignose'] = self.dignose
+                    data['Sevirety'] = self.sevirety
+                else:
                     print('Patient not found')
                     
             with open('Hospital record.json','w')as f :
