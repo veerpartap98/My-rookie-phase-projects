@@ -20,7 +20,7 @@ class Patientregestration :
                 id += 1
                 patient_id = f'Pid- {phone_number}'
                 global list_of_patient_details
-                list_of_patient_details = {'Patient Id': patient_id,"Name": name,'Age': age,'Bloodgroup': bloodgroup,'Ward':ward}
+                list_of_patient_details = {'Patient Id': patient_id,"Name": name,'Age': age,'Bloodgroup': bloodgroup,'Ward':ward,'Dignose':'',}
                 print(f'Details added succesfully')
                 break
                 
@@ -41,7 +41,7 @@ class Patientregestration :
         
 class DiagnosisLogger(Patientregestration) : 
     
-    def DiagnosisLogger(self):
+    def diagnosisLogger(self):
         syntoms = ['Chest pain','Short of Breath','Nausea','Fever','Headache','Lower Abdominal Pain','Cough']
         i = 0
         for syntom in syntoms:
@@ -79,24 +79,21 @@ class DiagnosisLogger(Patientregestration) :
     def addingdignose(self):
         try:
             ask_for_id = input('Enter id : ')
-            
             if os.path.exists('Hospital record.json'):
                 with open('Hospital record.json', 'r') as f:
                     alldata = json.load(f)
             else:
-                alldata = []
-            
+                alldata = [] 
             
             for data in alldata:
                 if data['Patient Id'] == ask_for_id:
-                    self.DiagnosisLogger()
-                    data['Dignose'] = self.dignose[0]
-                    data['Sevirety'] = self.sevirety[0]
-                else:
+                    data['Dignose'] = list(data['Dignose']).append(self.dignose)
+                    data['Sevirety'] = list(data['Sevirety']).append(self.sevirety)
                     print('Patient not found')
                     
             with open('Hospital record.json','w')as f :
                 json.dump(alldata,f,indent=2)
+            print('dignose added succesfully')
         except Exception as e :
             print(f'Somthing went wrong {e}')      
         
@@ -129,7 +126,7 @@ class Conclusion :
                     Patientregestration.add_dataofpatient(self)
                     print()
                 elif service == 2:
-                    DiagnosisLogger.DiagnosisLogger(self)
+                    DiagnosisLogger.diagnosisLogger(self)
                     DiagnosisLogger.addingdignose(self)
                     print()
                 elif service == 3 :
