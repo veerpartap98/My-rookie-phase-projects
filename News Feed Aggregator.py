@@ -38,7 +38,16 @@ def add_article():
             if purpose == 'add':
                 date = dt.date.today()
                 articletitle = input("Enter the title : ").strip().lower()
-                article = input('Enter the Artical : ').strip().lower()
+                print()
+                print("Enter your Article (Enter done to finish)")
+                lines2= []
+                while True:
+                    line = input().strip().lower()
+                    if line == 'done':
+                        break  
+                    lines2.append(line)
+                article = ' '.join(lines2)
+                print()
                 lines = []
                 print('Enter Your summary (enter done to finsh)')
                 while True:
@@ -47,6 +56,7 @@ def add_article():
                         break  
                     lines.append(line)
                 summary = ' '.join(lines)
+                print()
                 source = input('Where did you get this information? ').strip().lower()
 
                 
@@ -81,10 +91,11 @@ def search_for_artical():
             found = False
             for articel in all_articles:
                 if artical_name.strip().lower() in articel['title']:
-                    print(articel['article'])
-                    print(articel['date'])
-                    print(articel['source'])
-                    print(articel['summary'])
+                    print(f'Date of Publish : {articel['date']}')
+                    print()
+                    print(f'Article : {articel['article']}')
+                    print()
+                    print(f'Summary : {articel['summary']}')
                     found = True
             if found == False:
                     print('Article not found')
